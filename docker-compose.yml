@@ -1,0 +1,36 @@
+######  noVNC用#############
+# services:
+#   ubuntu-vnc-colmap:
+#     build: .
+#     container_name: ubuntu-vnc-colmap
+#     ports:
+#       # noVNC
+#       - "6080:6080"
+###########################
+
+services:
+  colmap-rdp:
+    build:
+      context: .             # Dockerfileのあるディレクトリ
+      dockerfile: Dockerfile
+      args:
+        RDP_USER: colmapuser       # 任意のユーザー名(remote desk top のログイン時に使用)
+        RDP_PASS: hogehoge         # 任意のパスワード(remote desk top のログイン時に使用)
+    container_name: colmap-rdp
+    ports:
+      - "3389:3389"          # RDPポート
+    volumes:
+      - /export/home/AokiShare/datasets/novelviewsynthesis/:/datasets
+      - ./scripts/:/workspace
+    # VNCのパスワードを指定したい場合
+    # environment:
+    #   - VNC_PASSWORD=xxxx
+    tty: true
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
