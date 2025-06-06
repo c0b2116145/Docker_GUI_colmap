@@ -16,6 +16,7 @@ services:
       args:
         RDP_USER: colmapuser       # 任意のユーザー名(remote desk top のログイン時に使用)
         RDP_PASS: hogehoge         # 任意のパスワード(remote desk top のログイン時に使用)
+    image: my-colmap-GUI:base
     container_name: colmap-rdp
     ports:
       - "3389:3389"          # RDPポート
